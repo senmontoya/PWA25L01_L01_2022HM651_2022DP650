@@ -8,7 +8,7 @@ namespace L01_2022HM651_2022DP650.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdPlato { get; set; }
+        public int platoId { get; set; }
         [StringLength(200)]
         public string nombrePlato { get; set; }
         

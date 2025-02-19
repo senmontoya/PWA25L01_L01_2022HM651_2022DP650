@@ -42,7 +42,7 @@ namespace L01_2022HM651_2022DP650.Controllers
                 _restauranteContexto.Platos.Add(platoNuevo);
                 _restauranteContexto.SaveChanges();
 
-                return CreatedAtAction(nameof(GetById), new { id = platoNuevo.IdPlato }, platoNuevo);
+                return CreatedAtAction(nameof(GetById), new { id = platoNuevo.platoId }, platoNuevo);
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace L01_2022HM651_2022DP650.Controllers
         [Route("Actualizar/{id}")]
         public IActionResult ActualizarPlato(int id, [FromBody] Platos platosMod)
         {
-            var platoActual = _restauranteContexto.Platos.FirstOrDefault(p => p.IdPlato == id);
+            var platoActual = _restauranteContexto.Platos.FirstOrDefault(p => p.platoId == id);
 
             if (platoActual == null)
                 return NotFound(new { message = "Plato no encontrado" });
@@ -90,7 +90,7 @@ namespace L01_2022HM651_2022DP650.Controllers
         [Route("Delete/{id}")]
         public IActionResult EliminarPlato(int id)
         {
-            var plato = _restauranteContexto.Platos.FirstOrDefault(p => p.IdPlato == id);
+            var plato = _restauranteContexto.Platos.FirstOrDefault(p => p.platoId == id);
 
             if (plato == null)
                 return NotFound(new { message = "Plato no encontrado" });
