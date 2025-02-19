@@ -14,4 +14,10 @@ namespace L01_2022HM651_2022DP650.Models
         
         public decimal precio { get; set; }
     }
+
+    public class PlatosDTO
+    {
+        public string nombrePlato { get; set; }
+        public decimal precio { get; set; }
+    }
 }
