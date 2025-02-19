@@ -100,6 +100,26 @@ namespace L01_2022HM651_2022DP650.Controllers
 
             return Ok(new { message = "Plato eliminado correctamente" });
         }
+        [HttpGet("filtrarPorPrecio/{precioMax}")]
+        public IActionResult FiltrarPedidosPorPrecio(decimal precioMax)
+        {
+            try
+            {
+                var pedidos = _restauranteContexto.pedido
+                    .Where(p => p.precio < precioMax)
+                    .ToList();
+
+                if (pedidos.Count == 0)
+                    return NotFound(new { message = "No hay pedidos con precio menor a " + precioMax });
+
+                return Ok(pedidos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error interno", error = ex.Message });
+            }
+        }
+
 
     }
 }

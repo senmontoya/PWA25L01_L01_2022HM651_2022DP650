@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace L01_2022HM651_2022DP650.Models
 {
-    public class Motorista
+    public class motoristas
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
