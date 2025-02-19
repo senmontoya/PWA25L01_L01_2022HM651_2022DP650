@@ -16,6 +16,19 @@ namespace L01_2022HM651_2022DP650.Controllers
             _restauranteContexto = restauranteContexto;
         }
 
+        [HttpGet]
+        [Route("GetAll")]
+        public IActionResult ObtenerPedidos()
+        {
+            List<pedido> pedidos = (from p in _restauranteContexto.pedido select p).ToList();
+            if (pedidos.Count == 0)
+            {
+                return NotFound("No hay pedidos");
+            }
+
+            return Ok(pedidos);
+        }
+
         [HttpPost]
         [Route("Add")]
         public IActionResult GuardarPedido([FromBody] pedido pedido)
@@ -57,6 +70,28 @@ namespace L01_2022HM651_2022DP650.Controllers
                 return BadRequest(bug.Message);
             }
         }
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public IActionResult EliminarPedido(int id)
+        {
+            try
+            {
+                pedido? pedido = (from p in _restauranteContexto.pedido where p.pedidoId == id select p).FirstOrDefault();
+                if (pedido == null)
+                
+                    return NotFound("Pedido no encontrado");
+                _restauranteContexto.pedido.Attach(pedido);
+                _restauranteContexto.pedido.Remove(pedido);
+                _restauranteContexto.SaveChanges();
+                return Ok("Pedido eliminado");
+            }
+            catch (Exception bug)
+            {
+                return BadRequest(bug.Message);
+            }
+        }
+
 
     }
 }
