@@ -102,12 +102,12 @@ namespace L01_2022HM651_2022DP650.Controllers
                            where pp.clienteId == id
                            select pp).ToList();
 
-            if (!pedidos.Any()) // Mejor uso que Count == 0
+            if (!pedidos.Any()) 
             {
-                return NotFound(new { mensaje = "No se encontraron pedidos para este cliente." });
+                return NotFound("No se encontraron pedidos para este cliente.");
             }
 
-            return Ok(pedidos); // Ahora retorna los pedidos
+            return Ok(pedidos); 
         }
 
         [HttpGet("filtradoMotorista/{id}")]
