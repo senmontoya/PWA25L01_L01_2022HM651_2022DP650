@@ -120,6 +120,46 @@ namespace L01_2022HM651_2022DP650.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("PlatoMasPedido/{platoId}")]
+        [HttpGet("topNPlatosMasPedidos/{n}")]
+        public IActionResult TopPlatos(int n)
+        {
+            try
+            {
+                var topPlatos = _restauranteContexto.pedido
+                    .GroupBy(p => p.platoId)
+                    .Select(g => new
+                    {
+                        PlatoId = g.Key,
+                        TotalPedidos = g.Sum(p => p.cantidad)
+                    })
+                    .OrderByDescending(p => p.TotalPedidos)
+                    .Take(n) 
+                    .Join(_restauranteContexto.Platos,
+                          pedido => pedido.PlatoId,
+                          plato => plato.platoId,
+                          (pedido, plato) => new
+                          {
+                              plato.nombrePlato,
+                              pedido.TotalPedidos
+                          })
+                    .ToList();
+
+                if (topPlatos.Count == 0)
+                {
+                    return NotFound("No hay pedidos registrados.");
+                }
+
+                return Ok(topPlatos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
     }
 }
