@@ -18,21 +18,21 @@ namespace L01_2022HM651_2022DP650.Controllers
             _restauranteContexto = restauranteContexto;
         }
 
-        // Obtener todos los motoristas
+        
         [HttpGet]
         [Route("GetAllMotoristas")]
         public IActionResult GetAllMotoristas()
         {
-            var listado = _restauranteContexto.Motorista.ToList();
+            var listado = _restauranteContexto.Motoristas.ToList();
             return Ok(listado);
         }
 
-        // Obtener motoristas filtrados por nombre
+        
         [HttpGet]
         [Route("GetByNombre/{nombre}")]
         public IActionResult GetMotoristasByNombre(string nombre)
         {
-            var motoristasFiltrados = _restauranteContexto.Motorista
+            var motoristasFiltrados = _restauranteContexto.Motoristas
                 .Where(m => m.nombreMotorista.Contains(nombre))
                 .ToList();
 
@@ -42,11 +42,11 @@ namespace L01_2022HM651_2022DP650.Controllers
             return Ok(motoristasFiltrados);
         }
 
-        // Obtener motorista por ID
+        
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var motorista = _restauranteContexto.Motorista.Find(id);
+            var motorista = _restauranteContexto.Motoristas.Find(id);
 
             if (motorista == null)
                 return NotFound(new { message = "Motorista no encontrado" });
@@ -54,7 +54,7 @@ namespace L01_2022HM651_2022DP650.Controllers
             return Ok(motorista);
         }
 
-        // Agregar un nuevo motorista
+        
         [HttpPost]
         [Route("Add")]
         public IActionResult AddMotorista([FromBody] DTOmotoristas motoDTO)
@@ -69,7 +69,7 @@ namespace L01_2022HM651_2022DP650.Controllers
                     nombreMotorista = motoDTO.nombreMotorista
                 };
 
-                _restauranteContexto.Motorista.Add(nuevoMotorista);
+                _restauranteContexto.Motoristas.Add(nuevoMotorista);
                 _restauranteContexto.SaveChanges();
 
                 return CreatedAtAction(nameof(GetById), new { id = nuevoMotorista.motoristaId }, nuevoMotorista);
@@ -80,12 +80,12 @@ namespace L01_2022HM651_2022DP650.Controllers
             }
         }
 
-        // Actualizar un motorista
+        
         [HttpPut]
         [Route("Actualizar/{id}")]
         public IActionResult UpdateMotorista(int id, [FromBody] DTOmotoristas motoDTO)
         {
-            var motoristaActual = _restauranteContexto.Motorista.FirstOrDefault(m => m.motoristaId == id);
+            var motoristaActual = _restauranteContexto.Motoristas.FirstOrDefault(m => m.motoristaId == id);
 
             if (motoristaActual == null)
                 return NotFound(new { message = "Motorista no encontrado" });
@@ -98,17 +98,17 @@ namespace L01_2022HM651_2022DP650.Controllers
             return Ok(motoristaActual);
         }
 
-        // Eliminar un motorista
+        
         [HttpDelete]
         [Route("Delete/{id}")]
         public IActionResult DeleteMotorista(int id)
         {
-            var motorista = _restauranteContexto.Motorista.FirstOrDefault(m => m.motoristaId == id);
+            var motorista = _restauranteContexto.Motoristas.FirstOrDefault(m => m.motoristaId == id);
 
             if (motorista == null)
                 return NotFound(new { message = "Motorista no encontrado" });
 
-            _restauranteContexto.Motorista.Remove(motorista);
+            _restauranteContexto.Motoristas.Remove(motorista);
             _restauranteContexto.SaveChanges();
 
             return Ok(new { message = "Motorista eliminado correctamente" });

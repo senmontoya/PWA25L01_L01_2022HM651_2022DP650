@@ -12,4 +12,9 @@ namespace L01_2022HM651_2022DP650.Models
         public string nombreMotorista { get; set; }
         
     }
+
+    public class DTOmotoristas
+    {
+        public string nombreMotorista { get; set; }
+    }
 }
