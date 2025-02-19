@@ -9,5 +9,7 @@ namespace L01_2022HM651_2022DP650.Models
 
         }
 
+        public DbSet<cliente> cliente { get; set; }
+        public DbSet<pedido> pedido { get; set; }
     }
 }
